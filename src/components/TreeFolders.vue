@@ -17,28 +17,26 @@ export default defineComponent({
 </script>
 
 <template>
-
-  <div className="container">
-    <div className="wrapper-tree">
-        <row-item :treeFolders = "treeFoldersState"></row-item>
-    </div>
+  <div className="wrapper-tree">
+    <row-item class="container" :treeFolders="treeFoldersState"></row-item>
   </div>
 </template>
 
 <style scoped>
-.container {
+.wrapper-tree {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100%;
+  overflow: hidden;
   height: 100vh;
+  width: 100%;
   max-width: 30rem;
   margin: 0 auto;
+
 }
-.wrapper-tree {
-  display: flex;
-  flex-direction: column;
-  padding: 3rem;
+
+.container {
   border: 1px solid #ccc;
+  padding: 2rem;
 }
 </style>
