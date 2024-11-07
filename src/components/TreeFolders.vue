@@ -8,9 +8,10 @@ export default defineComponent({
   components: { RowItem },
   computed:{
     ...mapState(useTreeFoldersStore,{
-      treeFoldersState: state => state.children,
-    }),
+      treeFoldersState: state => state.$state,
+    })
   }
+
 })
 
 </script>
