@@ -5,10 +5,6 @@ export default {
   name: "RowItem",
   props: {
     treeFolders: Array<Itree>,
-  },
-  data() {
-    return {
-    }
   }
 }
 </script>
@@ -38,7 +34,6 @@ export default {
       </li>
     </span>
   </ul>
-
 </template>
 
 //ограничиваем область видимости стиля класса list, c помощью :deep
@@ -47,12 +42,14 @@ export default {
 .list {
   width: 100%;
 }
+
 :deep(.list) {
   box-sizing: border-box;
   width: 100%;
 
 
 }
+
 .item-wrap {
   display: flex;
   justify-content: space-between;
@@ -63,6 +60,7 @@ export default {
   cursor: pointer;
 
 }
+
 .hover {
   :hover {
     background-color: rgba(170, 161, 161, 0.4);
