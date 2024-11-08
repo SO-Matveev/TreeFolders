@@ -10,15 +10,6 @@ export default defineComponent({
     ...mapState(useTreeFoldersStore,{
       treeFoldersState: state => state.$state,
     })
-  },
-  data() {
-    return {
-      expanded() {
-        // Из-за рекурсии ловим клик здесь
-        //Необходимо передать внутрь компонента, для скрытия/показа строки.
-        console.log('Click')
-      }
-    }
   }
 })
 
@@ -26,7 +17,7 @@ export default defineComponent({
 
 <template>
   <div className="wrapper-tree">
-    <row-item class="container" :treeFolders="treeFoldersState"  @click="expanded" ></row-item>
+    <row-item class="container" :treeFolders="treeFoldersState"></row-item>
   </div>
 </template>
 

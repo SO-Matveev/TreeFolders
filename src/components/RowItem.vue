@@ -5,8 +5,18 @@ export default {
   name: "RowItem",
   props: {
     treeFolders: Array<Itree>,
+  },
+  data() {
+    return {
+      expanded(treeFolder: Itree) {
+        if (!!treeFolder.children) {
+          treeFolder.show = !treeFolder.show
+        }
+      }
+    }
   }
 }
+
 </script>
 
 <template>
@@ -19,7 +29,7 @@ export default {
       >
         <div class="hover">
           <div class="item-wrap">
-            <div class="nameWrap">
+            <div class="nameWrap" @click="expanded(treeFolder)">
               <fa icon="folder" v-if="treeFolder.name.includes('Dir')"></fa>
               <fa icon="file" v-if="treeFolder.name.includes('File')"></fa>
               {{ treeFolder.name }}
@@ -30,7 +40,7 @@ export default {
             </div>
           </div>
         </div>
-        <RowItem :treeFolders="treeFolder.children" v-if="treeFolder.children"/>
+        <RowItem :treeFolders="treeFolder.children" v-if="treeFolder.children && treeFolder.show"/>
       </li>
     </span>
   </ul>
