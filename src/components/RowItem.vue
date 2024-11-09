@@ -9,6 +9,8 @@ export default {
   methods: {
     onDeleteItem(treeFolder: Itree) {
       console.log("DeleteData", treeFolder)
+      // Эмит срабатывает на первом экземпляре: Dir1, Dir2, File2
+      // Но при попытке удаления в консоль лог приходит экземпляр, но эмит на подъем события не срабатывает.
       this.$emit("deleteItem", treeFolder)
     },
     renameItem(treeFolder: Itree) {
@@ -48,7 +50,8 @@ export default {
         <div class="item-wrap">
           <div class="row-wrap" @click="expanded(treeFolder)">
             <div class="nameWrap" >
-              <fa icon="folder" v-if="treeFolder.type.includes('dir')"></fa>
+              <fa icon="folder" v-if="treeFolder.type.includes('dir') && !treeFolder.show "/>
+              <fa icon="folder-open" v-if="treeFolder.type.includes('dir') && !!treeFolder.show"/>
               <fa icon="file" v-if="treeFolder.type.includes('file')"></fa>
               {{ treeFolder.name }}
             </div>
