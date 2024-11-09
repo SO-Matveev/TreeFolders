@@ -2,22 +2,31 @@
 import { useTreeFoldersStore } from "@/stores/TreeFoldersStore";
 import { defineComponent } from "vue";
 import RowItem from "@/components/RowItem.vue";
-import { mapState } from "pinia";
+import { mapActions, mapState } from "pinia";
+import type Itree from "@/stores/model";
 
 export default defineComponent({
   components: { RowItem },
   computed:{
     ...mapState(useTreeFoldersStore,{
-      treeFoldersState: state => state.$state,
+      treeFoldersState: state => state.data,
     })
+  },
+  methods: {
+    ...mapActions(useTreeFoldersStore,["deleteItemActions"] ),
+    onDelete ( treeFolder: Itree) {
+      this.deleteItemActions(treeFolder)
+    }
   }
 })
-
 </script>
 
 <template>
   <div className="wrapper-tree">
-    <row-item class="container" :treeFolders="treeFoldersState"></row-item>
+    <RowItem class="container"
+              :treeFolders="treeFoldersState"
+              @deleteItem = "onDelete"
+    ></RowItem>
   </div>
 </template>
 

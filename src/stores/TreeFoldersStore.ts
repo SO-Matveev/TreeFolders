@@ -2,8 +2,8 @@ import { defineStore } from 'pinia'
 import type Itree from "@/stores/model";
 
 export const useTreeFoldersStore = defineStore( 'treeFolders',{
-    state: ():Itree[]  => {
-      return [
+    state: (): { data: Itree[] }  => ({
+      data: [
            {
              name: "Dir 1",
              type: 'dir',
@@ -51,11 +51,14 @@ export const useTreeFoldersStore = defineStore( 'treeFolders',{
              show: false
            }
          ]
-    },
+    }),
   getters: {},
   actions: {
-
-
+      deleteItemActions(treeFolder: Itree) {
+        console.log('Deleting item', treeFolder)
+        this.data = this.data.filter(item => item.name !== treeFolder.name)
+        console.log('after delete', this.data)
+      }
   }
 
 })

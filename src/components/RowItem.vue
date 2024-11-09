@@ -6,34 +6,35 @@ export default {
   props: {
     treeFolders: Array<Itree>,
   },
-  data() {
-    return {
-      expanded(treeFolder: Itree) {
-        if (!!treeFolder.children) {
-          treeFolder.show = !treeFolder.show
-        }
-      },
-      renameItem(treeFolder: Itree) {
-        const message: string = `Как вы хотите переименовать ${treeFolder.name}`
-        const newName: string | null = prompt(
-          message, treeFolder.name
-        )
-        if (newName === null) return
+  methods: {
+    onDeleteItem(treeFolder: Itree) {
+      console.log("DeleteData", treeFolder)
+      this.$emit("deleteItem", treeFolder)
+    },
+    renameItem(treeFolder: Itree) {
+      const message: string = `Как вы хотите переименовать ${treeFolder.name}`
+      const newName: string | null = prompt(
+        message, treeFolder.name
+      )
+      if (newName === null) return
 
-        if (newName === "") {
-          const typeRename: string = treeFolder.type.includes('dir') ? 'папки' : 'файла'
-          alert(`Введите имя ${typeRename}`)
-          this.renameItem(treeFolder);
-          return
-        }
-        treeFolder.name = newName
-        treeFolder.show = !treeFolder.show
-
+      if (newName === "") {
+        const typeRename: string = treeFolder.type.includes('dir') ? 'папки' : 'файла'
+        alert(`Введите имя ${typeRename}`)
+        this.renameItem(treeFolder);
+        return
       }
-    }
+      treeFolder.name = newName
+      treeFolder.show = !treeFolder.show
+
+    },
+    expanded(treeFolder: Itree) {
+      if (!!treeFolder.children) {
+        treeFolder.show = !treeFolder.show
+      }
+    },
   }
 }
-
 </script>
 
 <template>
@@ -53,11 +54,12 @@ export default {
             </div>
             <div class="buttons">
               <fa class="button" icon="pen-to-square" @click="renameItem(treeFolder)"/>
-              <fa class="button" icon="xmark"></fa>
+              <fa class="button" icon="xmark" @click="onDeleteItem(treeFolder)"/>
             </div>
           </div>
         </div>
-      <RowItem :treeFolders="treeFolder.children" v-if="treeFolder.children && treeFolder.show"/>
+      <RowItem :treeFolders="treeFolder.children"
+               v-if="treeFolder.children && treeFolder.show"/>
       </li>
     </span>
   </ul>
