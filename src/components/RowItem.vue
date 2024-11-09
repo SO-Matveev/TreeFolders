@@ -12,6 +12,23 @@ export default {
         if (!!treeFolder.children) {
           treeFolder.show = !treeFolder.show
         }
+      },
+      renameItem(treeFolder: Itree) {
+        const message: string = `Как вы хотите переименовать ${treeFolder.name}`
+        const newName: string | null = prompt(
+          message, treeFolder.name
+        )
+        if (newName === null) return
+
+        if (newName === "") {
+          const typeRename: string = treeFolder.type.includes('dir') ? 'папки' : 'файла'
+          alert(`Введите имя ${typeRename}`)
+          this.renameItem(treeFolder);
+          return
+        }
+        treeFolder.name = newName
+        treeFolder.show = !treeFolder.show
+
       }
     }
   }
@@ -30,12 +47,12 @@ export default {
         <div class="item-wrap">
           <div class="row-wrap" @click="expanded(treeFolder)">
             <div class="nameWrap" >
-              <fa icon="folder" v-if="treeFolder.name.includes('Dir')"></fa>
-              <fa icon="file" v-if="treeFolder.name.includes('File')"></fa>
+              <fa icon="folder" v-if="treeFolder.type.includes('dir')"></fa>
+              <fa icon="file" v-if="treeFolder.type.includes('file')"></fa>
               {{ treeFolder.name }}
             </div>
             <div class="buttons">
-              <fa class="button" icon="pen-to-square"/>
+              <fa class="button" icon="pen-to-square" @click="renameItem(treeFolder)"/>
               <fa class="button" icon="xmark"></fa>
             </div>
           </div>
