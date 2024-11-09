@@ -27,20 +27,20 @@ export default {
         v-for="treeFolder in treeFolders"
         :key="treeFolder.name"
       >
-        <div class="hover">
-          <div class="item-wrap">
-            <div class="nameWrap" @click="expanded(treeFolder)">
+        <div class="item-wrap">
+          <div class="row-wrap" @click="expanded(treeFolder)">
+            <div class="nameWrap" >
               <fa icon="folder" v-if="treeFolder.name.includes('Dir')"></fa>
               <fa icon="file" v-if="treeFolder.name.includes('File')"></fa>
               {{ treeFolder.name }}
             </div>
             <div class="buttons">
-              <fa icon="pen-to-square"/>
-              <fa icon="xmark"></fa>
+              <fa class="button" icon="pen-to-square"/>
+              <fa class="button" icon="xmark"></fa>
             </div>
           </div>
         </div>
-        <RowItem :treeFolders="treeFolder.children" v-if="treeFolder.children && treeFolder.show"/>
+      <RowItem :treeFolders="treeFolder.children" v-if="treeFolder.children && treeFolder.show"/>
       </li>
     </span>
   </ul>
@@ -51,16 +51,15 @@ export default {
 <style scoped>
 .list {
   width: 100%;
+  list-style: none;
 }
 
 :deep(.list) {
   box-sizing: border-box;
   width: 100%;
-
-
 }
 
-.item-wrap {
+.row-wrap {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -68,13 +67,19 @@ export default {
   font-size: 1.4rem;
   transition: background-color .3s;
   cursor: pointer;
-
 }
-
-.hover {
+:deep(.item-wrap) {
   :hover {
     background-color: rgba(170, 161, 161, 0.4);
     color: #000000
   }
+}
+.buttons {
+  display: flex;
+  align-items: center;
+}
+.button{
+  cursor: pointer;
+  margin-right: 0.5rem;
 }
 </style>
