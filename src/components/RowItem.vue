@@ -1,3 +1,36 @@
+<template>
+  <ul class="list">
+    <span>
+      <li
+        class="item"
+        v-for="treeFolder in treeFolders"
+        :key="treeFolder.name"
+      >
+        <div class="item-wrap">
+          <div class="row-wrap" @click="expanded(treeFolder)">
+            <div class="nameWrap">
+              <fa icon="folder" v-if="treeFolder.type.includes('dir') && !treeFolder.show "/>
+              <fa icon="folder-open" v-if="treeFolder.type.includes('dir') && !!treeFolder.show"/>
+              <fa icon="file" v-if="treeFolder.type.includes('file')"></fa>
+              {{ treeFolder.name }}
+            </div>
+            <div class="buttons">
+              <fa class="button" icon="pen-to-square" @click="renameItem(treeFolder)"/>
+              <fa class="button" icon="xmark" @click="onDeleteItem(treeFolder)"/>
+            </div>
+          </div>
+        </div>
+        //Если передать в наследника рекурсии емит на клик
+        //@click="$emit('deleteItem', treeFolder.children)
+        //То клик на удаление срабатывает на всю строку в целом, а не на иконку
+      <RowItem :treeFolders="treeFolder.children"
+               v-if="treeFolder.children && treeFolder.show"
+      />
+      </li>
+    </span>
+  </ul>
+</template>
+
 <script lang="ts">
 import type Itree from "@/stores/model";
 
@@ -8,7 +41,6 @@ export default {
   },
   methods: {
     onDeleteItem(treeFolder: Itree) {
-      console.log("DeleteData", treeFolder)
       // Эмит срабатывает на первом экземпляре: Dir1, Dir2, File2
       // Но при попытке удаления в консоль лог приходит экземпляр, но эмит на подъем события не срабатывает.
       this.$emit("deleteItem", treeFolder)
@@ -39,35 +71,6 @@ export default {
 }
 </script>
 
-<template>
-  <ul class="list">
-    <span>
-      <li
-        class="item"
-        v-for="treeFolder in treeFolders"
-        :key="treeFolder.name"
-      >
-        <div class="item-wrap">
-          <div class="row-wrap" @click="expanded(treeFolder)">
-            <div class="nameWrap" >
-              <fa icon="folder" v-if="treeFolder.type.includes('dir') && !treeFolder.show "/>
-              <fa icon="folder-open" v-if="treeFolder.type.includes('dir') && !!treeFolder.show"/>
-              <fa icon="file" v-if="treeFolder.type.includes('file')"></fa>
-              {{ treeFolder.name }}
-            </div>
-            <div class="buttons">
-              <fa class="button" icon="pen-to-square" @click="renameItem(treeFolder)"/>
-              <fa class="button" icon="xmark" @click="onDeleteItem(treeFolder)"/>
-            </div>
-          </div>
-        </div>
-      <RowItem :treeFolders="treeFolder.children"
-               v-if="treeFolder.children && treeFolder.show"/>
-      </li>
-    </span>
-  </ul>
-</template>
-
 //ограничиваем область видимости стиля класса list, c помощью :deep
 //чтобы в рекурсии они выравнивались под единую правую границу
 <style scoped>
@@ -90,17 +93,20 @@ export default {
   transition: background-color .3s;
   cursor: pointer;
 }
+
 :deep(.item-wrap) {
   :hover {
     background-color: rgba(170, 161, 161, 0.4);
     color: #000000
   }
 }
+
 .buttons {
   display: flex;
   align-items: center;
 }
-.button{
+
+.button {
   cursor: pointer;
   margin-right: 0.5rem;
 }

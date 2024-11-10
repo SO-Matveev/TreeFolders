@@ -55,7 +55,6 @@ export const useTreeFoldersStore = defineStore( 'treeFolders',{
   getters: {},
   actions: {
       deleteItemActions(treeFolder: Itree) {
-        console.log('Deleting item', treeFolder)
         this.data = this.data.filter(item => item.name !== treeFolder.name)
       }
   }

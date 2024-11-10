@@ -1,3 +1,12 @@
+<template>
+  <div className="wrapper-tree">
+    <RowItem class="container"
+              :treeFolders="treeFoldersState"
+              @deleteItem = "onDelete"
+    ></RowItem>
+  </div>
+</template>
+
 <script  lang="ts">
 import { useTreeFoldersStore } from "@/stores/TreeFoldersStore";
 import { defineComponent } from "vue";
@@ -20,15 +29,6 @@ export default defineComponent({
   }
 })
 </script>
-
-<template>
-  <div className="wrapper-tree">
-    <RowItem class="container"
-              :treeFolders="treeFoldersState"
-              @deleteItem = "onDelete"
-    ></RowItem>
-  </div>
-</template>
 
 <style scoped>
 .wrapper-tree {
