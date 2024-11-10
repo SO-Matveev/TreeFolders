@@ -20,9 +20,9 @@
             </div>
           </div>
         </div>
-        //Если передать в наследника рекурсии емит на клик
-        //@click="$emit('deleteItem', treeFolder.children)
-        //То клик на удаление срабатывает на всю строку в целом, а не на иконку
+<!--        Если передать в наследника рекурсии емит на клик-->
+<!--        @click="$emit('deleteItem', treeFolder.children)-->
+<!--        То клик на удаление срабатывает на всю строку в целом, а не на иконку-->
       <RowItem :treeFolders="treeFolder.children"
                v-if="treeFolder.children && treeFolder.show"
       />
